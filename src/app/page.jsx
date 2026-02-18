@@ -44,8 +44,8 @@ export default function Dashboard() {
                         {stats.map((stat, i) => (
                             <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-transform hover:scale-[1.02] cursor-default">
                                 <div className="flex items-center justify-between mb-4">
-                                    <div className={`w-12 h-12 rounded-2xl bg-${stat.color === 'indigo' ? 'blue' : stat.color}-50 flex items-center justify-center`}>
-                                        <stat.icon className={`w-6 h-6 text-${stat.color === 'indigo' ? 'blue' : stat.color}-600`} />
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${stat.color === 'indigo' ? 'bg-blue-50 text-blue-600' : stat.color === 'amber' ? 'bg-amber-50 text-amber-600' : stat.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                                        <stat.icon className="w-6 h-6" />
                                     </div>
                                     <div className={`flex items-center text-xs font-bold ${stat.trendingUp ? 'text-emerald-600' : 'text-rose-600'}`}>
                                         {stat.trendingUp ? <ArrowUpRight className="w-3 h-3 mr-1" /> : <ArrowDownRight className="w-3 h-3 mr-1" />}
@@ -119,7 +119,10 @@ export default function Dashboard() {
                                             <span className="text-slate-900 font-bold">{item.acc}%</span>
                                         </div>
                                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                            <div className={`h-full bg-${item.color}-600 rounded-full`} style={{ width: `${item.acc}%` }} />
+                                            <div
+                                                className={`h-full rounded-full ${item.color === 'blue' ? 'bg-blue-600' : item.color === 'purple' ? 'bg-purple-600' : item.color === 'emerald' ? 'bg-emerald-600' : 'bg-rose-600'}`}
+                                                style={{ width: `${item.acc}%` }}
+                                            />
                                         </div>
                                     </div>
                                 ))}

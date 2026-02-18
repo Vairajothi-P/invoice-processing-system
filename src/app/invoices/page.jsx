@@ -23,6 +23,10 @@ export default function InvoicesPage() {
         }]);
     };
 
+    const removeRow = (idx) => {
+        setLineItems(lineItems.filter((_, i) => i !== idx));
+    };
+
     return (
         <div className="min-h-screen bg-white">
             <Sidebar />
@@ -139,7 +143,10 @@ export default function InvoicesPage() {
                                             </td>
                                             <td className="px-4 py-3 text-sm font-bold text-slate-900">{item.amount.toFixed(2)}</td>
                                             <td className="px-4 py-3">
-                                                <button className="p-2 text-slate-400 hover:text-rose-500 transition-colors">
+                                                <button
+                                                    onClick={() => removeRow(idx)}
+                                                    className="p-2 text-slate-400 hover:text-rose-500 transition-colors"
+                                                >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </td>

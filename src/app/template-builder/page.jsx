@@ -21,9 +21,32 @@ export default function TemplateBuilder() {
         { id: 3, label: "Invoice Date", type: "date", ocr_hint: "Near label 'Date'", mapping: "invoice_date" },
         { id: 4, label: "Net Total", type: "currency", ocr_hint: "Bottom right total", mapping: "net_amt" },
     ]);
+    const [isDeploying, setIsDeploying] = useState(false);
+    const [sampleImage, setSampleImage] = useState(null);
 
     const addField = () => {
         setFields([...fields, { id: fields.length + 1, label: "New Field", type: "text", ocr_hint: "", mapping: "" }]);
+    };
+
+    const handleDeploy = () => {
+        setIsDeploying(true);
+        setTimeout(() => {
+            setIsDeploying(false);
+            alert("Template deployed successfully to the extraction engine!");
+        }, 1500);
+    };
+
+    const handleLoadImage = () => {
+        // Trigger a hidden file input
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+            if (e.target.files?.[0]) {
+                setSampleImage(URL.createObjectURL(e.target.files[0]));
+            }
+        };
+        input.click();
     };
 
     return (
@@ -38,8 +61,12 @@ export default function TemplateBuilder() {
                             <h1 className="text-2xl font-bold text-slate-900">Template Builder</h1>
                             <p className="text-slate-500 text-sm mt-1">Define how OCR data maps to your database fields</p>
                         </div>
-                        <button className="px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all flex items-center">
-                            Deploy Template
+                        <button
+                            onClick={handleDeploy}
+                            disabled={isDeploying}
+                            className="px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all flex items-center disabled:opacity-50"
+                        >
+                            {isDeploying ? "Deploying..." : "Deploy Template"}
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </button>
                     </div>
@@ -91,14 +118,28 @@ export default function TemplateBuilder() {
                                 </div>
                             </div>
 
-                            <div className="bg-emerald-50 rounded-3xl p-8 border-2 border-dashed border-emerald-200 flex flex-col items-center justify-center min-h-[300px]">
-                                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-                                    <Scan className="w-8 h-8 text-emerald-600" />
-                                </div>
-                                <h4 className="text-xl font-bold text-emerald-900 mb-2">Visual Mapping</h4>
-                                <p className="text-emerald-700 text-center max-w-sm mb-6">Upload a sample invoice to visually draw boxes and map them to fields manually.</p>
-                                <button className="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
-                                    Load Sample Image
+                            <div className="bg-emerald-50 rounded-3xl p-8 border-2 border-dashed border-emerald-200 flex flex-col items-center justify-center min-h-[300px] overflow-hidden">
+                                {sampleImage ? (
+                                    <div className="relative w-full h-[300px] mb-6">
+                                        <img src={sampleImage} alt="Sample" className="w-full h-full object-contain rounded-xl shadow-lg shadow-emerald-100" />
+                                        <div className="absolute inset-0 bg-blue-500/10 border-2 border-blue-500 rounded-lg m-12 flex items-center justify-center">
+                                            <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">Mapped Area</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                                            <Scan className="w-8 h-8 text-emerald-600" />
+                                        </div>
+                                        <h4 className="text-xl font-bold text-emerald-900 mb-2">Visual Mapping</h4>
+                                        <p className="text-emerald-700 text-center max-w-sm mb-6">Upload a sample invoice to visually draw boxes and map them to fields manually.</p>
+                                    </>
+                                )}
+                                <button
+                                    onClick={handleLoadImage}
+                                    className="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200"
+                                >
+                                    {sampleImage ? "Change Sample Image" : "Load Sample Image"}
                                 </button>
                             </div>
                         </div>
