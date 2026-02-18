@@ -1,0 +1,6 @@
+flask
+flask-cors
+paddlepaddle
+paddleocr
+opencv-python
+numpy
