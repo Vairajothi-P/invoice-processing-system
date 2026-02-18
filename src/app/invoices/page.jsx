@@ -7,13 +7,12 @@ import {
     Save,
     Trash2,
     Printer,
-    ChevronDown,
     Plus,
     FileCheck,
     History
 } from "lucide-react";
 
-export default function PurchaseEntry() {
+export default function InvoicesPage() {
     const [lineItems, setLineItems] = useState([
         { sno: 1, code: "1001", description: "NESCAFE SUNRISE 45GM (J)\nCost: 149.70 PrvCost: 168.24", qty: 10, free: 0, rate: 142.50, netCost: 149.69, selling: 174.00, mrp: 180.00, netAmt: 1496.99, dis1: 0, dis1Amt: 0.00, tax: 5.00, taxAmt: 71.29, amount: 1425.70, taxS: 0, taxSAmt: 0, roi: 16.23, profit: 13.97 },
     ]);
@@ -33,7 +32,7 @@ export default function PurchaseEntry() {
                 <main className="p-8">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h1 className="text-2xl font-bold text-slate-900">Purchase Entry</h1>
+                            <h1 className="text-2xl font-bold text-slate-900">Invoices</h1>
                             <p className="text-slate-500 text-sm mt-1">Review and verify extracted invoice data</p>
                         </div>
 

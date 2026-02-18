@@ -30,12 +30,12 @@ export default function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-zinc-200 dark:bg-zinc-950 dark:border-zinc-800 transition-all duration-300">
+        <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 transition-all duration-300">
             <div className="flex flex-col h-full">
-                <div className="flex items-center h-16 px-6 border-b border-zinc-200 dark:border-zinc-800">
-                    <ScanQrCode className="w-8 h-8 text-indigo-600 mr-2" />
-                    <span className="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">
-                        OCR Invoce
+                <div className="flex items-center h-16 px-6 border-b border-slate-200">
+                    <ScanQrCode className="w-8 h-8 text-blue-600 mr-2" />
+                    <span className="text-xl font-bold text-slate-900 tracking-tight">
+                        OCR Invoice
                     </span>
                 </div>
 
@@ -47,25 +47,25 @@ export default function Sidebar() {
                             className={cn(
                                 "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group",
                                 pathname === item.href
-                                    ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400"
-                                    : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white"
+                                    ? "bg-blue-50 text-blue-600"
+                                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                             )}
                         >
                             <item.icon className={cn(
                                 "w-5 h-5 mr-3 transition-colors",
-                                pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400 group-hover:text-zinc-500"
+                                pathname === item.href ? "text-blue-600" : "text-slate-400 group-hover:text-slate-500"
                             )} />
                             {item.label}
                         </Link>
                     ))}
                 </nav>
 
-                <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">
-                    <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50">
-                        <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
+                <div className="p-4 border-t border-slate-200">
+                    <div className="p-4 rounded-2xl bg-slate-50">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                             System Health
                         </p>
-                        <div className="flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+                        <div className="flex items-center text-xs text-emerald-600">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
                             OCR Service Online
                         </div>
