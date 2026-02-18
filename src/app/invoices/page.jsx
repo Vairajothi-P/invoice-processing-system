@@ -175,7 +175,7 @@ export default function InvoicesPage() {
                             </div>
                             <div className="p-4 bg-slate-100 rounded-xl">
                                 <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Remarks</p>
-                                <textarea className="w-full bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-900 resize-none" rows={2} placeholder="Add any notes here..." />
+                                <textarea className="w-full bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-900 resize-none" rows={2} placeholder="Add any notes here..." defaultValue="" />
                             </div>
                         </div>
 

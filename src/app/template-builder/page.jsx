@@ -113,7 +113,7 @@ export default function TemplateBuilder() {
                                     </div>
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-semibold text-slate-500 uppercase">Description</label>
-                                        <textarea className="w-full bg-slate-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 resize-none" rows={3}>Default mapping for standard GST invoices with header and table items.</textarea>
+                                        <textarea className="w-full bg-slate-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 resize-none" rows={3} defaultValue="Default mapping for standard GST invoices with header and table items." />
                                     </div>
                                     <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
                                         <p className="text-xs font-bold text-blue-600 uppercase mb-2 flex items-center">
