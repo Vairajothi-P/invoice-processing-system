@@ -246,80 +246,80 @@ export default function InvoicesPage() {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr className="bg-[#1e3a8a] text-white font-bold h-7 sticky top-0">
-                                    <th className="border border-white/20 px-1 w-8">Sno</th>
-                                    <th className="border border-white/20 px-1 w-16">Code</th>
-                                    <th className="border border-white/20 px-2 text-left">Description</th>
-                                    <th className="border border-white/20 px-1 w-12">Qty</th>
-                                    <th className="border border-white/20 px-1 w-12 text-center">Free</th>
-                                    <th className="border border-white/20 px-1 w-16">Rate</th>
-                                    <th className="border border-white/20 px-1 w-20">NetCost</th>
-                                    <th className="border border-white/20 px-1 w-16">Selling</th>
-                                    <th className="border border-white/20 px-1 w-16">Mrp</th>
-                                    <th className="border border-white/20 px-1 w-20">Net Amt</th>
-                                    <th className="border border-white/20 px-1 w-14">Dis1 %</th>
-                                    <th className="border border-white/20 px-1 w-14 text-xs">Dis1 Amt</th>
-                                    <th className="border border-white/20 px-1 w-14">Tax %</th>
-                                    <th className="border border-white/20 px-1 w-16">Tax Amt</th>
-                                    <th className="border border-white/20 px-1 w-20">Amount</th>
-                                    <th className="border border-white/20 px-1 w-14">Tax_S%</th>
-                                    <th className="border border-white/20 px-1 w-16 text-xs">Tax_S Amt</th>
-                                    <th className="border border-white/20 px-1 w-14">ROI %</th>
-                                    <th className="border border-white/20 px-1 w-14">Profit %</th>
-                                    <th className="border border-white/20 px-1 w-8 print:hidden"></th>
+                                    <th className="border border-white/40 px-1 w-8">Sno</th>
+                                    <th className="border border-white/40 px-1 w-16">Code</th>
+                                    <th className="border border-white/40 px-2 text-left">Description</th>
+                                    <th className="border border-white/40 px-1 w-12">Qty</th>
+                                    <th className="border border-white/40 px-1 w-12 text-center">Free</th>
+                                    <th className="border border-white/40 px-1 w-16">Rate</th>
+                                    <th className="border border-white/40 px-1 w-20">NetCost</th>
+                                    <th className="border border-white/40 px-1 w-16">Selling</th>
+                                    <th className="border border-white/40 px-1 w-16">Mrp</th>
+                                    <th className="border border-white/40 px-1 w-20">Net Amt</th>
+                                    <th className="border border-white/40 px-1 w-14">Dis1 %</th>
+                                    <th className="border border-white/40 px-1 w-14 text-xs">Dis1 Amt</th>
+                                    <th className="border border-white/40 px-1 w-14">Tax %</th>
+                                    <th className="border border-white/40 px-1 w-16">Tax Amt</th>
+                                    <th className="border border-white/40 px-1 w-20">Amount</th>
+                                    <th className="border border-white/40 px-1 w-14">Tax_S%</th>
+                                    <th className="border border-white/40 px-1 w-16 text-xs">Tax_S Amt</th>
+                                    <th className="border border-white/40 px-1 w-14">ROI %</th>
+                                    <th className="border border-white/40 px-1 w-14">Profit %</th>
+                                    <th className="border border-white/40 px-1 w-8 print:hidden"></th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-50">
                                 {lineItems.map((item, idx) => (
-                                    <tr key={item.id} className="h-6 hover:bg-blue-50/30 group">
-                                        <td className="border border-blue-50 px-1 text-center font-medium bg-[#f0f9ff]/50 text-blue-900">{item.sno}</td>
-                                        <td className="border border-blue-50 px-1">
+                                    <tr key={item.id} className="h-6 hover:bg-blue-50/50 group">
+                                        <td className="border border-blue-200 px-1 text-center font-medium bg-[#f0f9ff] text-blue-900">{item.sno}</td>
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-center outline-none" value={item.code} onChange={e => handleRowChange(item.id, 'code', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-2 leading-tight">
+                                        <td className="border border-blue-200 px-2 leading-tight">
                                             <input className="w-full bg-transparent border-none p-0 font-bold text-gray-800 outline-none" value={item.description} onChange={e => handleRowChange(item.id, 'description', e.target.value)} />
                                             <input className="w-full bg-transparent border-none p-0 text-[10px] text-gray-400 outline-none" value={item.subDesc} onChange={e => handleRowChange(item.id, 'subDesc', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.qty} onChange={e => handleRowChange(item.id, 'qty', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-center outline-none" value={item.free} onChange={e => handleRowChange(item.id, 'free', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.rate} onChange={e => handleRowChange(item.id, 'rate', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1 text-right text-gray-400 select-none">{parseFloat(item.netCost).toFixed(4)}</td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1 text-right text-gray-500 select-none">{parseFloat(item.netCost).toFixed(4)}</td>
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none text-blue-600 font-bold" value={item.selling} onChange={e => handleRowChange(item.id, 'selling', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.mrp} onChange={e => handleRowChange(item.id, 'mrp', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1 text-right font-bold text-blue-800 select-none">{parseFloat(item.netAmt).toFixed(2)}</td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1 text-right font-bold text-blue-800 select-none">{parseFloat(item.netAmt).toFixed(2)}</td>
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.dis1} onChange={e => handleRowChange(item.id, 'dis1', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none text-gray-400" value={item.dis1Amt} onChange={e => handleRowChange(item.id, 'dis1Amt', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.tax} onChange={e => handleRowChange(item.id, 'tax', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1 text-right text-orange-600 select-none">{parseFloat(item.taxAmt).toFixed(2)}</td>
-                                        <td className="border border-blue-50 px-1 text-right font-bold text-gray-900 select-none">{parseFloat(item.amount).toFixed(2)}</td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1 text-right text-orange-600 select-none">{parseFloat(item.taxAmt).toFixed(2)}</td>
+                                        <td className="border border-blue-200 px-1 text-right font-bold text-gray-900 select-none">{parseFloat(item.amount).toFixed(2)}</td>
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none" value={item.taxS} onChange={e => handleRowChange(item.id, 'taxS', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none text-gray-400" value={item.taxSAmt} onChange={e => handleRowChange(item.id, 'taxSAmt', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none text-[10px] text-gray-400" value={item.roi} onChange={e => handleRowChange(item.id, 'roi', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1">
+                                        <td className="border border-blue-200 px-1">
                                             <input className="w-full bg-transparent border-none p-0 text-right outline-none text-[10px] text-gray-400" value={item.profit} onChange={e => handleRowChange(item.id, 'profit', e.target.value)} />
                                         </td>
-                                        <td className="border border-blue-50 px-1 text-center print:hidden">
+                                        <td className="border border-blue-200 px-1 text-center print:hidden">
                                             <button onClick={() => deleteRow(item.id)} className="text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
                                                 <Trash2 className="w-3 h-3" />
                                             </button>
@@ -329,9 +329,9 @@ export default function InvoicesPage() {
                                 {/* Empty Rows to fill height */}
                                 {[...Array(Math.max(0, EMPTY_ROWS_COUNT - lineItems.length))].map((_, i) => (
                                     <tr key={`empty-${i}`} className="h-6">
-                                        <td className="border border-blue-50 bg-[#f0f9ff]/30"></td>
-                                        {[...Array(18)].map((_, j) => <td key={j} className="border border-blue-50"></td>)}
-                                        <td className="border border-blue-50 print:hidden"></td>
+                                        <td className="border border-blue-200 bg-[#f0f9ff]/50"></td>
+                                        {[...Array(18)].map((_, j) => <td key={j} className="border border-blue-200"></td>)}
+                                        <td className="border border-blue-200 print:hidden"></td>
                                     </tr>
                                 ))}
                             </tbody>
