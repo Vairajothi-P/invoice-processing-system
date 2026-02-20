@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1e293b;
+  --background: #f8fafc;
+  /* Very light slate blue-grey */
+  --foreground: #0f172a;
+  /* Dark Navy for text */
   --primary-blue: #2563eb;
   --primary-blue-hover: #1d4ed8;
   --accent-blue: #eff6ff;
+  --sidebar-bg: #0f172a;
+  /* Dark Navy Sidebar */
+  --sidebar-text: #94a3b8;
+  --sidebar-text-active: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary-blue);
+  --color-sidebar: var(--sidebar-bg);
 }
 
 body {

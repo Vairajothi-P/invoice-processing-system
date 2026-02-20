@@ -49,7 +49,7 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50/50">
+        <div className="min-h-screen bg-[#f8fafc]">
             <Sidebar />
             <div className="pl-64">
                 <Navbar />

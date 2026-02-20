@@ -115,7 +115,7 @@ export default function MediaLibrary() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50/50" onClick={() => setActiveMenuId(null)}>
+        <div className="min-h-screen bg-[#f8fafc]" onClick={() => setActiveMenuId(null)}>
             <Sidebar />
             <div className="pl-64">
                 <Navbar />

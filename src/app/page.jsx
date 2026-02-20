@@ -21,7 +21,7 @@ export default function Dashboard() {
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-[#f8fafc]">
             <Sidebar />
             <div className="pl-64">
                 <Navbar />
