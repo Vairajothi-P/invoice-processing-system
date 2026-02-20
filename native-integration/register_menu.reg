@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00 
+ 
+[HKEY_CLASSES_ROOT\*\shell\UploadToOCR] 
+@="Upload to OCR invoice" 
+"Icon"="C:\\Windows\\System32\\shell32.dll,145" 
+ 
+[HKEY_CLASSES_ROOT\*\shell\UploadToOCR\command] 
+@="\"D:\\sardonyx\\san\\native-integration\\upload-handler.bat\" \"%1\"" 

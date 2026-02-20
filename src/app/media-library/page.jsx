@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import {
@@ -47,6 +47,31 @@ export default function MediaLibrary() {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [activeMenuId, setActiveMenuId] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+
+    // Fetch real files from public/uploads via API
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const response = await fetch('/api/files');
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    // Prepend new files while keeping INITIAL_FILES as defaults
+                    setFiles(prev => {
+                        const existingIds = new Set(data.map(f => f.id));
+                        const filteredInitial = INITIAL_FILES.filter(f => !existingIds.has(f.id));
+                        return [...data, ...filteredInitial];
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to fetch files:", err);
+            }
+        };
+
+        fetchFiles();
+        // Polling every 5 seconds to catch system context menu uploads
+        const interval = setInterval(fetchFiles, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
     const filteredFiles = files.filter(file => {
         const matchesSearch = file.name.toLowerCase().includes(searchTerm.toLowerCase());
