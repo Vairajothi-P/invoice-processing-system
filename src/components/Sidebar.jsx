@@ -8,7 +8,8 @@ import {
     FileText,
     Settings,
     Database,
-    ScanQrCode
+    ScanQrCode,
+    Library
 } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -22,6 +23,7 @@ const menuItems = [
     { icon: Upload, label: "Upload Invoice", href: "/upload" },
     { icon: ScanQrCode, label: "Template Builder", href: "/template-builder" },
     { icon: FileText, label: "Invoices", href: "/invoices" },
+    { icon: Library, label: "Media Library", href: "/media-library" },
     { icon: Database, label: "Database", href: "/database" },
     { icon: Settings, label: "Settings", href: "/settings" },
 ];
