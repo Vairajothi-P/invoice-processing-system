@@ -28,7 +28,7 @@ function cn(...inputs) {
     return twMerge(clsx(inputs));
 }
 
-const mockFiles = [
+const INITIAL_FILES = [
     { id: 1, name: "invoice_101.pdf", type: "pdf", size: "1.2 MB", date: "2025-11-12", color: "red" },
     { id: 2, name: "company_logo.png", type: "image", size: "450 KB", date: "2025-11-10", color: "blue" },
     { id: 3, name: "tax_report_2024.docx", type: "doc", size: "2.8 MB", date: "2025-11-09", color: "blue" },
@@ -40,12 +40,15 @@ const mockFiles = [
 ];
 
 export default function MediaLibrary() {
+    const [files, setFiles] = useState(INITIAL_FILES);
     const [view, setView] = useState("grid"); // grid or list
     const [searchTerm, setSearchTerm] = useState("");
     const [filter, setFilter] = useState("all");
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    const [activeMenuId, setActiveMenuId] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    const filteredFiles = mockFiles.filter(file => {
+    const filteredFiles = files.filter(file => {
         const matchesSearch = file.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = filter === "all" || file.type === filter;
         return matchesSearch && matchesFilter;
@@ -60,8 +63,34 @@ export default function MediaLibrary() {
         }
     };
 
+    const toggleMenu = (e, id) => {
+        e.stopPropagation();
+        setActiveMenuId(activeMenuId === id ? null : id);
+    };
+
+    const handleAction = (e, action, file) => {
+        e.stopPropagation();
+        setActiveMenuId(null);
+
+        switch (action) {
+            case 'download':
+                alert(`Starting download for: ${file.name}`);
+                break;
+            case 'view':
+                setSelectedFile(file);
+                break;
+            case 'delete':
+                if (confirm(`Are you sure you want to delete ${file.name}?`)) {
+                    setFiles(files.filter(f => f.id !== file.id));
+                }
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-slate-50/50">
+        <div className="min-h-screen bg-slate-50/50" onClick={() => setActiveMenuId(null)}>
             <Sidebar />
             <div className="pl-64">
                 <Navbar />
@@ -151,7 +180,8 @@ export default function MediaLibrary() {
                                 {filteredFiles.map((file) => (
                                     <div
                                         key={file.id}
-                                        className="group bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-xl hover:shadow-slate-200/50 transition-all cursor-pointer relative overflow-hidden"
+                                        onClick={(e) => handleAction(e, 'view', file)}
+                                        className="group bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-xl hover:shadow-slate-200/50 transition-all cursor-pointer relative overflow-visible"
                                     >
                                         <div className="aspect-square rounded-xl bg-slate-50 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
                                             {getFileIcon(file.type)}
@@ -165,16 +195,47 @@ export default function MediaLibrary() {
                                         </div>
 
                                         {/* Hover Overlay Actions */}
-                                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-1.5 bg-white/90 backdrop-blur shadow-sm rounded-lg hover:bg-slate-50 text-slate-600">
+                                        <div className={cn(
+                                            "absolute top-2 right-2 transition-opacity",
+                                            activeMenuId === file.id ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                        )}>
+                                            <button
+                                                onClick={(e) => toggleMenu(e, file.id)}
+                                                className="p-1.5 bg-white/90 backdrop-blur shadow-sm rounded-lg hover:bg-slate-50 text-slate-600 border border-slate-100"
+                                            >
                                                 <MoreVertical className="w-4 h-4" />
                                             </button>
+
+                                            {/* Dropdown Menu */}
+                                            {activeMenuId === file.id && (
+                                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-[60] animate-in zoom-in-95 duration-200">
+                                                    <button
+                                                        onClick={(e) => handleAction(e, 'download', file)}
+                                                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                                                    >
+                                                        <Download className="w-4 h-4" /> Download
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => handleAction(e, 'view', file)}
+                                                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                                                    >
+                                                        <FileText className="w-4 h-4" /> View Details
+                                                    </button>
+                                                    <hr className="my-1 border-slate-100" />
+                                                    <button
+                                                        onClick={(e) => handleAction(e, 'delete', file)}
+                                                        className="w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" /> Delete
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         ) : (
-                            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-right">
                                 <table className="w-full text-left">
                                     <thead>
                                         <tr className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50">
@@ -187,7 +248,11 @@ export default function MediaLibrary() {
                                     </thead>
                                     <tbody className="divide-y divide-slate-50">
                                         {filteredFiles.map((file) => (
-                                            <tr key={file.id} className="hover:bg-slate-50 transition-colors group">
+                                            <tr
+                                                key={file.id}
+                                                className="hover:bg-slate-50 transition-colors group cursor-pointer"
+                                                onClick={(e) => handleAction(e, 'view', file)}
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="p-2 bg-slate-50 rounded-lg">
@@ -201,15 +266,38 @@ export default function MediaLibrary() {
                                                 </td>
                                                 <td className="px-6 py-4 text-sm text-slate-500">{file.size}</td>
                                                 <td className="px-6 py-4 text-sm text-slate-500">{file.date}</td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                        <button className="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors" title="Download">
-                                                            <Download className="w-4 h-4" />
-                                                        </button>
-                                                        <button className="p-2 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors" title="Delete">
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    </div>
+                                                <td className="px-6 py-4 text-right relative">
+                                                    <button
+                                                        onClick={(e) => toggleMenu(e, file.id)}
+                                                        className="p-2 hover:bg-slate-100 text-slate-400 rounded-lg transition-colors"
+                                                    >
+                                                        <MoreVertical className="w-5 h-5" />
+                                                    </button>
+
+                                                    {/* List View Dropdown */}
+                                                    {activeMenuId === file.id && (
+                                                        <div className="absolute right-6 top-12 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-[60] animate-in zoom-in-95 duration-200">
+                                                            <button
+                                                                onClick={(e) => handleAction(e, 'download', file)}
+                                                                className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                                                            >
+                                                                <Download className="w-4 h-4" /> Download
+                                                            </button>
+                                                            <button
+                                                                onClick={(e) => handleAction(e, 'view', file)}
+                                                                className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                                                            >
+                                                                <FileText className="w-4 h-4" /> View Details
+                                                            </button>
+                                                            <hr className="my-1 border-slate-100" />
+                                                            <button
+                                                                onClick={(e) => handleAction(e, 'delete', file)}
+                                                                className="w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2"
+                                                            >
+                                                                <Trash2 className="w-4 h-4" /> Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}
@@ -234,6 +322,58 @@ export default function MediaLibrary() {
                     )}
                 </main>
             </div>
+
+            {/* Detail Modal */}
+            {selectedFile && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setSelectedFile(null)} />
+                    <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                            <h2 className="text-xl font-bold text-slate-900">File Details</h2>
+                            <button onClick={() => setSelectedFile(null)} className="p-2 hover:bg-slate-100 rounded-full text-slate-400 transition-colors">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="p-8">
+                            <div className="flex items-center gap-6 mb-8">
+                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                                    {getFileIcon(selectedFile.type)}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="text-xl font-bold text-slate-900 truncate mb-1">{selectedFile.name}</h3>
+                                    <p className="text-slate-500 text-sm capitalize">{selectedFile.type} Document</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6 mb-8">
+                                <div className="p-4 bg-slate-50 rounded-xl">
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">File Size</p>
+                                    <p className="text-slate-900 font-semibold">{selectedFile.size}</p>
+                                </div>
+                                <div className="p-4 bg-slate-50 rounded-xl">
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Created At</p>
+                                    <p className="text-slate-900 font-semibold">{selectedFile.date}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={(e) => handleAction(e, 'download', selectedFile)}
+                                    className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                                >
+                                    <Download className="w-4 h-4" /> Download
+                                </button>
+                                <button
+                                    onClick={(e) => handleAction(e, 'delete', selectedFile)}
+                                    className="px-6 py-3 border border-rose-100 text-rose-600 font-semibold rounded-xl hover:bg-rose-50 transition-all"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Upload Modal (Simplified) */}
             {isUploadModalOpen && (
@@ -263,7 +403,13 @@ export default function MediaLibrary() {
                                 >
                                     Cancel
                                 </button>
-                                <button className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
+                                <button
+                                    onClick={() => {
+                                        alert("Mock upload started...");
+                                        setIsUploadModalOpen(false);
+                                    }}
+                                    className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+                                >
                                     Start Upload
                                 </button>
                             </div>
@@ -274,3 +420,5 @@ export default function MediaLibrary() {
         </div>
     );
 }
+
+
